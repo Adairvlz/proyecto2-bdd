@@ -12,7 +12,7 @@ function Clientes() {
     const [mensaje, setMensaje] = useState('');
 
     const cargarClientes = async () => {
-        const res = await fetch('http://localhost:8000/api/clientes');
+        const res = await fetch('https://proyecto2-bdd-production.up.railway.app/api/clientes');
         const data = await res.json();
         setClientes(data);
     };

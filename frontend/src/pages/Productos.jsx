@@ -20,7 +20,7 @@ function Productos() {
 
 
     const cargarProductos = async () => {
-        const res = await fetch('http://localhost:8000/api/productos');
+        const res = await fetch('https://proyecto2-bdd-production.up.railway.app/api/productos');
         const data = await res.json();
         setProductos(data);
     };

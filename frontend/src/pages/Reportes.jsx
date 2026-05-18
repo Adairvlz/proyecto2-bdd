@@ -4,7 +4,7 @@ function Reportes() {
     const [reporte, setReporte] = useState([]);
 
     const cargarReporte = async () => {
-        const res = await fetch('http://localhost:8000/reportes/productos-mas-vendidos');
+        const res = await fetch('https://proyecto2-bdd-production.up.railway.app/reportes/productos-mas-vendidos');
         const data = await res.json();
         setReporte(data);
     };
