@@ -1,37 +1,115 @@
-# Proyecto 2 - Base de Datos
+# Proyecto 2 - Base de Datos | Celtics Store
 
-Este proyecto es una aplicación web que consta de un backend desarrollado en **Laravel (PHP)**, un frontend construido con **React (Vite)** y una base de datos en **PostgreSQL**. Todo el entorno está preparado y orquestado para ejecutarse fácilmente utilizando **Docker Compose**.
+Este proyecto es una aplicación web full stack enfocada en la gestión de una tienda temática de los Boston Celtics. El sistema permite administrar productos, clientes, ventas e inventario mediante una arquitectura moderna utilizando:
 
-## 🚀 Requisitos Previos
+- **Frontend:** React + Vite
+- **Backend:** Laravel (PHP)
+- **Base de Datos:** PostgreSQL
+- **Contenedores:** Docker + Docker Compose
+- **Deploy Frontend:** GitHub Pages
+- **Deploy Backend:** Railway
 
-Asegúrate de tener instalado lo siguiente en tu máquina:
-- [Docker](https://www.docker.com/products/docker-desktop)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+---
 
-*(Nota: Para el desarrollo local también es recomendable tener Node.js y Composer (PHP) si deseas ejecutar comandos fuera de Docker, pero no son estrictamente necesarios para levantar el proyecto).*
+# 🌐 Enlaces del Proyecto
 
-## 🛠️ Instalación y Ejecución
+## Frontend desplegado
+https://adairvlz.github.io/proyecto2-bdd/
 
-Sigue estos pasos para configurar y levantar el entorno de desarrollo:
+## Backend desplegado
+https://proyecto2-bdd-production.up.railway.app/api/productos
 
-### 1. Clonar el repositorio
-Si aún no lo has hecho, clona el repositorio o entra al directorio del proyecto:
+---
+
+# 🚀 Funcionalidades Implementadas
+
+## CRUD de Productos
+- Crear productos
+- Editar productos
+- Eliminar productos
+- Listar productos
+
+## CRUD de Clientes
+- Crear clientes
+- Editar clientes
+- Eliminar clientes
+- Listar clientes
+
+## Sistema de Carrito
+- Agregar productos al carrito
+- Contador dinámico de productos
+
+## Reportes
+- Productos más vendidos
+- Consultas SQL avanzadas
+
+## Backend API REST
+- Endpoints desarrollados con Laravel
+- Integración con PostgreSQL
+- Respuestas JSON
+
+## Testing
+- Pruebas básicas con Vitest y React Testing Library
+
+## Validaciones
+- Manejo de errores visibles para el usuario
+- Validaciones en formularios
+
+---
+
+# 🛠️ Requisitos Previos
+
+Asegúrate de tener instalado:
+
+- Docker
+- Docker Compose
+- Git
+- Node.js (Opcional)
+- Composer (Opcional)
+
+---
+
+# 📦 Instalación Local
+
+## 1. Clonar el repositorio
+
 ```bash
+git clone https://github.com/Adairvlz/proyecto2-bdd
 cd proyecto2-bdd
 ```
 
-### 2. Configurar las variables de entorno del Backend
-Asegúrate de tener un archivo `.env` configurado para el backend (Laravel).
-Entra en la carpeta `backend` y haz una copia de `.env.example` llamándolo `.env` si aún no existe.
+---
+
+## 2. Configurar variables de entorno
+
+Entrar a la carpeta backend:
+
 ```bash
 cd backend
-cp .env.example .env
-cd ..
 ```
-*Si estás en Windows (sin Bash), simplemente copia y pega el archivo `.env.example` en la misma carpeta `backend` y renómbralo a `.env`.*
 
-Verifica que tu archivo `.env` del backend tenga la configuración de conexión a la base de datos de PostgreSQL apuntando al contenedor de Docker:
+Copiar `.env.example` como `.env`
+
+Linux/Mac:
+```bash
+cp .env.example .env
+```
+
+Windows:
+Copiar manualmente el archivo `.env.example` y renombrarlo a `.env`.
+
+---
+
+## 3. Configuración del backend Laravel
+
+Dentro del `.env`:
+
 ```env
+APP_NAME=CelticsStore
+APP_ENV=local
+APP_KEY=PaCaDhqfSwysDmaXB2ot+mQP38KJIux0KyK8+DhDud0=
+APP_DEBUG=true
+
 DB_CONNECTION=pgsql
 DB_HOST=db
 DB_PORT=5432
@@ -40,61 +118,147 @@ DB_USERNAME=proy2
 DB_PASSWORD=secret
 ```
 
-### 3. Levantar los contenedores con Docker Compose
-Desde la **raíz del proyecto** (donde se encuentra el archivo `docker-compose.yml`), ejecuta el siguiente comando:
+---
+
+## 4. Levantar contenedores
+
+Desde la raíz del proyecto:
 
 ```bash
 docker compose up -d
 ```
-Este comando descargará las imágenes, configurará la base de datos (ejecutando automáticamente los scripts de la carpeta `database/`) e iniciará los servicios de backend y frontend.
 
-*(Nota: Si quieres ver los logs en la terminal, puedes correr `docker compose up` sin el `-d`).*
+---
 
-### 4. Instalar dependencias del Backend (Si es necesario)
-Si es la primera vez que levantas el proyecto y no tienes la carpeta `vendor` dentro de `backend`, instala las dependencias mediante Composer ejecutando este comando dentro del contenedor:
+## 5. Instalar dependencias Laravel
 
 ```bash
-docker exec -it celtics_backend composer install
-```
-
-### 5. Generar la clave de la aplicación Laravel
-Si copiaste el archivo `.env.example` por primera vez, necesitarás generar una clave para tu aplicación Laravel:
-
-```bash
-docker exec -it celtics_backend php artisan key:generate
+docker compose exec backend composer install
 ```
 
 ---
 
-## 🌐 Acceso a la Aplicación
+## 6. Generar APP_KEY
 
-Una vez que los contenedores estén funcionando, puedes acceder a los servicios a través de las siguientes URLs:
-
-- **Frontend (React)**: [http://localhost:5173](http://localhost:5173)
-- **Backend (API Laravel)**: [http://localhost:8000](http://localhost:8000)
-- **Base de Datos (PostgreSQL)**: Está mapeada al puerto `5433` de tu host, por si deseas conectarte usando herramientas como DBeaver o pgAdmin.
-  - **Host**: `localhost`
-  - **Puerto**: `5433`
-  - **Usuario**: `proy2`
-  - **Contraseña**: `secret`
-  - **Base de datos**: `celtics_store`
+```bash
+docker compose exec backend php artisan key:generate
+```
 
 ---
 
-## 📦 Estructura del Proyecto
+# 🌐 Acceso Local
 
-- `/backend`: API REST construida en Laravel.
-- `/frontend`: Interfaz de usuario construida con React y Vite.
-- `/database`: Scripts de SQL (`schema.sql` y `seed.sql`) que inicializan y pueblan la base de datos de forma automática al levantar el contenedor de PostgreSQL.
-- `docker-compose.yml`: Archivo de configuración que orquesta los contenedores (Frontend, Backend y Base de Datos).
-
-## 🛑 Detener la Aplicación
-Para detener la ejecución de todos los contenedores sin borrar la información de tu base de datos, ejecuta desde la raíz del proyecto:
-```bash
-docker compose down
+## Frontend
+```text
+http://localhost:5173
 ```
 
-Si deseas reiniciar todo desde cero y **eliminar los volúmenes** (esto **borrará toda la base de datos** para que se vuelva a crear la próxima vez que levantes el entorno):
-```bash
-docker compose down -v
+## Backend Laravel
+```text
+http://localhost:8000
 ```
+
+## PostgreSQL
+```text
+Host: localhost
+Puerto: 5433
+Usuario: proy2
+Contraseña: secret
+Base de datos: celtics_store
+```
+
+---
+
+# 🗂️ Estructura del Proyecto
+
+```text
+/backend
+    API Laravel
+
+/frontend
+    Aplicación React + Vite
+
+/database
+    schema.sql
+    seed.sql
+
+/docker-compose.yml
+    Configuración de contenedores
+```
+
+---
+
+# 🧪 Ejecutar Tests
+
+Entrar a frontend:
+
+```bash
+cd frontend
+```
+
+Ejecutar tests:
+
+```bash
+npm run test
+```
+
+---
+
+# 🚀 Deploy
+
+## Frontend - GitHub Pages
+
+Entrar a frontend:
+
+```bash
+cd frontend
+```
+
+Deploy:
+
+```bash
+npm run deploy
+```
+
+---
+
+## Backend - Railway
+
+El backend utiliza:
+
+- Laravel
+- PostgreSQL
+- Dockerfile personalizado
+
+Variables importantes:
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=${{Postgres.PGHOST}}
+DB_PORT=${{Postgres.PGPORT}}
+DB_DATABASE=${{Postgres.PGDATABASE}}
+
+DB_USERNAME=proy2
+DB_PASSWORD=secret
+```
+
+---
+
+# 📊 Base de Datos
+
+El sistema incluye:
+
+- Productos
+- Categorías
+- Proveedores
+- Clientes
+- Usuarios
+- Empleados
+- Ventas
+- Detalle de ventas
+- Inventario
+
+Además se implementaron:
+
+- JOINs
+- Subconsultas
