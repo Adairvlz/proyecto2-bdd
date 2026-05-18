@@ -131,3 +131,22 @@ h2 {
     border-radius: 4px;
     margin-bottom: 15px;
 }
+
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.tabs a {
+    text-decoration: none;
+    background: #007a33;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.tabs a:hover {
+    background: #005f28;
+}
