@@ -12,6 +12,8 @@ WORKDIR /app
 
 COPY backend/ /app/
 
-RUN composer install --no-dev --optimize-autoloader
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 CMD php artisan serve --host=0.0.0.0 --port=${PORT}
