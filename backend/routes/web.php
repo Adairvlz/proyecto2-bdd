@@ -65,19 +65,23 @@ Route::get('/reportes/catalogo', function () {
 });
 
 // SUBQUERY #1 - Productos vendidos
-Route::get('/reportes/productos-vendidos', function () {
-    return DB::select("
+Route::get('/reportes/productos-mas-vendidos', function () {
+    $reporte = DB::select("
         SELECT 
-            p.id_producto,
-            p.nombre,
-            p.precio,
-            p.stock
-        FROM productos p
-        WHERE p.id_producto IN (
-            SELECT dv.id_producto
-            FROM detalle_ventas dv
-        )
+            p.nombre AS producto,
+            SUM(dv.cantidad) AS unidades_vendidas,
+            SUM(dv.subtotal) AS total_generado
+        FROM detalle_ventas dv
+        JOIN productos p ON dv.id_producto = p.id_producto
+        GROUP BY p.nombre
+        HAVING SUM(dv.cantidad) >= 1
+        ORDER BY unidades_vendidas DESC
     ");
+
+    return response()->json($reporte)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
 });
 
 // SUBQUERY #2 - Clientes activos
